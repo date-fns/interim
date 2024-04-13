@@ -1,14 +1,14 @@
 export class Duration {
-  years: number | undefined;
-  months: number | undefined;
-  weeks: number | undefined;
-  days: number | undefined;
-  hours: number | undefined;
-  minutes: number | undefined;
-  seconds: number | undefined;
-  milliseconds: number | undefined;
-  microseconds: number | undefined;
-  nanoseconds: number | undefined;
+  years: number;
+  months: number;
+  weeks: number;
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  milliseconds: number;
+  microseconds: number;
+  nanoseconds: number;
 
   constructor(
     years?: number | undefined,
@@ -22,18 +22,16 @@ export class Duration {
     microseconds?: number | undefined,
     nanoseconds?: number | undefined
   ) {
-    Object.assign(this, {
-      years,
-      months,
-      weeks,
-      days,
-      hours,
-      minutes,
-      seconds,
-      milliseconds,
-      microseconds,
-      nanoseconds,
-    });
+    this.years = years || 0;
+    this.months = months || 0;
+    this.weeks = weeks || 0;
+    this.days = days || 0;
+    this.hours = hours || 0;
+    this.minutes = minutes || 0;
+    this.seconds = seconds || 0;
+    this.milliseconds = milliseconds || 0;
+    this.microseconds = microseconds || 0;
+    this.nanoseconds = nanoseconds || 0;
   }
 
   toString() {
@@ -53,14 +51,21 @@ export class Duration {
       parts.push("T");
       if (this.hours) parts.push(`${this.hours}H`);
       if (this.minutes) parts.push(`${this.minutes}M`);
-      if (this.seconds) parts.push(this.seconds.toString());
-      if (this.milliseconds || this.microseconds || this.nanoseconds)
+
+      const hasNanoseconds =
+        this.milliseconds || this.microseconds || this.nanoseconds;
+
+      if (this.seconds || hasNanoseconds) parts.push(this.seconds.toString());
+
+      if (hasNanoseconds) {
         parts.push(".");
-      if (this.milliseconds) parts.push(`${this.milliseconds}`);
-      if (this.microseconds) parts.push(`${this.microseconds}`);
-      if (this.nanoseconds) parts.push(`${this.nanoseconds}`);
-      if (this.seconds) parts.push("S");
-      return parts.join("");
+        parts.push(this.milliseconds.toString().padStart(3, "0"));
+        parts.push(this.microseconds.toString().padStart(3, "0"));
+        parts.push(this.nanoseconds.toString().padStart(3, "0"));
+      }
+
+      if (this.seconds || hasNanoseconds) parts.push("S");
     }
+    return parts.join("");
   }
 }

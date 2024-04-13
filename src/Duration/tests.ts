@@ -102,7 +102,38 @@ describe("Duration", () => {
       });
 
       describe("toString", () => {
-        it.todo("returns the duration as an ISO 8601 string");
+        it("formats only given parts", () => {
+          const duration = new Duration(
+            1,
+            undefined,
+            3,
+            undefined,
+            5,
+            undefined
+          );
+          expect(duration.toString()).toBe("P1Y3WT5H");
+        });
+
+        it("omits time designator if time is missing", () => {
+          const duration = new Duration(1, undefined, 3);
+          expect(duration.toString()).toBe("P1Y3W");
+        });
+
+        it("formats seconds with nanoseconds", () => {
+          const duration = new Duration(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            1
+          );
+          expect(duration.toString()).toBe("PT0.000000001S");
+        });
       });
 
       describe("toJSON", () => {
