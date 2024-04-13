@@ -1,0 +1,51 @@
+{
+  "name": "@date-fns/interim",
+  "version": "0.1.0",
+  "description": "A lightweight subset of Temporal API to enable transition into the future",
+  "main": "index.js",
+  "module": "index.mjs",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      }
+    }
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/date-fns/interim.git"
+  },
+  "keywords": [
+    "Firebase",
+    "Point-in-time recovery",
+    "Typesaurus"
+  ],
+  "author": "Sasha Koss <koss@nocorp.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/date-fns/interim/issues"
+  },
+  "homepage": "https://github.com/date-fns/interim#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.24.1",
+    "@babel/preset-env": "^7.24.4",
+    "@babel/preset-typescript": "^7.24.1",
+    "@parcel/watcher": "^2.4.1",
+    "babel-plugin-add-import-extension": "^1.6.0",
+    "glob": "^10.3.12",
+    "typescript": "^5.4.5",
+    "vitest": "^1.4.0"
+  },
+  "peerDependencies": {}
+}
