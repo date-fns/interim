@@ -68,6 +68,7 @@ async function measure() {
           size - lastSize
         )}`
       );
+      console.log("");
 
       lastLength = code.length;
       lastSize = size;

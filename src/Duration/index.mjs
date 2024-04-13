@@ -2,7 +2,7 @@ const codes = "YMWDHMS".split("");
 
 export class Duration {
   constructor(...parts) {
-    this.parts = parts.map((part) => part || 0);
+    this.parts = parts;
   }
 
   toString() {
@@ -18,10 +18,10 @@ export class Duration {
 
       if (index < 4 && value) string += `${value}${code}`;
       if (index >= 4 && index < 6 && value) timeString += `${value}${code}`;
-      if (index === 6) secString += `${value}`;
+      if (index === 6) secString += `${value || 0}`;
 
       if (index > 6) {
-        nsString += `${value.toString().padStart(3, "0")}`;
+        nsString += `${(value || 0).toString().padStart(3, "0")}`;
         if (value) addNs = true;
       }
     }
