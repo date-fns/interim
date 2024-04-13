@@ -38,7 +38,7 @@ async function measure() {
   const code = await readFile(srcPath, "utf-8");
   const processedCode = srcPath.endsWith(".ts")
     ? await transform(code, {
-        jsc: { parser: { syntax: "typescript" } },
+        jsc: { target: "esnext", parser: { syntax: "typescript" } },
       })
     : code;
 
@@ -68,6 +68,7 @@ async function measure() {
           size - lastSize
         )}`
       );
+      console.log("");
 
       lastLength = code.length;
       lastSize = size;
