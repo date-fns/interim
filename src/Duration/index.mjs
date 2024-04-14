@@ -1,24 +1,5 @@
 export class Duration {
-  //#region properties
-
-  private parts: number[];
-
-  //#endregion
-
-  constructor(
-    years?: number | undefined,
-    months?: number | undefined,
-    weeks?: number | undefined,
-    days?: number | undefined,
-    hours?: number | undefined,
-    minutes?: number | undefined,
-    seconds?: number | undefined,
-    milliseconds?: number | undefined,
-    microseconds?: number | undefined,
-    nanoseconds?: number | undefined
-  );
-
-  constructor(...parts: number[]) {
+  constructor(...parts) {
     this.parts = parts;
   }
 
@@ -57,7 +38,7 @@ export class Duration {
 
   //#region static
 
-  static from(string: string): Duration {
+  static from(string) {
     const parts = string.match(re)?.slice(1) || [];
     return new Duration(...parts.map(Number));
   }
@@ -65,7 +46,20 @@ export class Duration {
   //#endregion
 }
 
+const props =
+  "years,months,weeks,days,hours,minutes,seconds,milliseconds,microseconds,nanoseconds".split(
+    ","
+  );
+
 const codes = "YMWDHMS".split("");
 
 const re =
   /P(?:(\d+(?:[\.,]\d+)?)Y)?(?:(\d+(?:[\.,]\d+)?)M)?(?:(\d+(?:[\.,]\d+)?)W)?(?:(\d+(?:[\.,]\d+)?)D)?(?:T(?:(\d+(?:[\.,]\d+)?)H)?(?:(\d+(?:[\.,]\d+)?)M)?(?:(\d+)(?:[\.,](?:(\d{0,3})(?:(\d{0,3})(?:(\d{0,3})))?))?S)?)?/;
+
+props.map((prop, index) =>
+  Object.defineProperty(Duration.prototype, prop, {
+    get() {
+      return this.parts[index] || 0;
+    },
+  })
+);

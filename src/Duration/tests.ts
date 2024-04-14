@@ -56,43 +56,79 @@ describe("Duration", () => {
   describe("prototype", () => {
     describe("properties", () => {
       describe("years", () => {
-        it.todo("returns the years part of the duration");
+        it("returns the years part of the duration", () => {
+          expect(new Duration(1).years).toBe(1);
+          expect(new Duration().years).toBe(0);
+        });
       });
 
       describe("months", () => {
-        it.todo("returns the months part of the duration");
+        it("returns the months part of the duration", () => {
+          expect(new Duration(1, 2).months).toBe(2);
+          expect(new Duration(1).months).toBe(0);
+        });
       });
 
       describe("weeks", () => {
-        it.todo("returns the weeks part of the duration");
+        it("returns the weeks part of the duration", () => {
+          expect(new Duration(1, 2, 3).weeks).toBe(3);
+          expect(new Duration(1, 2).weeks).toBe(0);
+        });
       });
 
       describe("days", () => {
-        it.todo("returns the days part of the duration");
+        it("returns the days part of the duration", () => {
+          expect(new Duration(1, 2, 3, 4).days).toBe(4);
+          expect(new Duration(1, 2, 3).days).toBe(0);
+        });
       });
 
       describe("hours", () => {
-        it.todo("returns the hours part of the duration");
+        it("returns the hours part of the duration", () => {
+          expect(new Duration(1, 2, 3, 4, 5).hours).toBe(5);
+          expect(new Duration(1, 2, 3, 4).hours).toBe(0);
+        });
       });
 
       describe("minutes", () => {
-        it.todo("returns the minutes part of the duration");
+        it("returns the minutes part of the duration", () => {
+          expect(new Duration(1, 2, 3, 4, 5, 6).minutes).toBe(6);
+          expect(new Duration(1, 2, 3, 4, 5).minutes).toBe(0);
+        });
       });
 
       describe("seconds", () => {
-        it.todo("returns the seconds part of the duration");
+        it("returns the seconds part of the duration", () => {
+          expect(new Duration(1, 2, 3, 4, 5, 6, 7).seconds).toBe(7);
+          expect(new Duration(1, 2, 3, 4, 5, 6).seconds).toBe(0);
+        });
       });
 
       describe("milliseconds", () => {
-        it.todo("returns the milliseconds part of the duration");
+        it("returns the milliseconds part of the duration", () => {
+          expect(new Duration(1, 2, 3, 4, 5, 6, 7, 987).milliseconds).toBe(987);
+          expect(new Duration(1, 2, 3, 4, 5, 6, 7).milliseconds).toBe(0);
+        });
       });
 
       describe("microseconds ", () => {
-        it.todo("returns the microseconds part of the duration");
+        it("returns the microseconds part of the duration", () => {
+          expect(new Duration(1, 2, 3, 4, 5, 6, 7, 987, 654).microseconds).toBe(
+            654
+          );
+          expect(new Duration(1, 2, 3, 4, 5, 6, 7, 987).microseconds).toBe(0);
+        });
       });
 
       describe("nanoseconds  ", () => {
-        it.todo("returns the nanoseconds part of the duration");
+        it("returns the nanoseconds part of the duration", () => {
+          expect(
+            new Duration(1, 2, 3, 4, 5, 6, 7, 987, 654, 321).nanoseconds
+          ).toBe(321);
+          expect(new Duration(1, 2, 3, 4, 5, 6, 7, 987, 654).nanoseconds).toBe(
+            0
+          );
+        });
       });
 
       describe("sign", () => {
