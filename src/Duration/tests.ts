@@ -11,12 +11,41 @@ describe("Duration", () => {
     });
 
     describe("from", () => {
-      it("cretes a new instance from a string", () => {
-        const duration = Duration.from("P1Y2M3W4DT5H6M7.987654321S");
-        expect(duration.toString()).toBe("P1Y2M3W4DT5H6M7.987654321S");
+      describe("string", () => {
+        it("cretes a new instance", () => {
+          const duration = Duration.from("P1Y2M3W4DT5H6M7.987654321S");
+          expect(duration.toString()).toBe("P1Y2M3W4DT5H6M7.987654321S");
+        });
+
+        it("parses date-only", () => {
+          const duration = Duration.from("P2W4D");
+          expect(duration.toString()).toBe("P2W4D");
+        });
+
+        it("parses time-only", () => {
+          const duration = Duration.from("PT2H");
+          expect(duration.toString()).toBe("PT2H");
+        });
+
+        it("parses seconds", () => {
+          const duration = Duration.from("PT2S");
+          expect(duration.toString()).toBe("PT2S");
+        });
+
+        it("parses nanoseconds", () => {
+          const duration = Duration.from("PT0.000000001S");
+          expect(duration.toString()).toBe("PT0.000000001S");
+        });
+
+        it("supports commas", () => {
+          const duration = Duration.from("PT0,000000001S");
+          expect(duration.toString()).toBe("PT0.000000001S");
+        });
       });
 
-      it.todo("cretes a new instance from a Duration-like object");
+      describe("Duration-like", () => {
+        it.todo("cretes a new instance");
+      });
     });
 
     describe("compare", () => {

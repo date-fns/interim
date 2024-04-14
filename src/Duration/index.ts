@@ -59,12 +59,6 @@ export class Duration {
 
   static from(string: string): Duration {
     const parts = string.match(re)?.slice(1) || [];
-    const secWithNs = parts.pop();
-    if (secWithNs) {
-      const [sec, ns] = secWithNs.split(".");
-      parts.push(sec!, ...(ns?.padEnd(3, "0").match(/\d{3}/g) || []));
-    }
-
     return new Duration(...parts.map(Number));
   }
 
@@ -73,13 +67,5 @@ export class Duration {
 
 const codes = "YMWDHMS".split("");
 
-const re = new RegExp(
-  `P${codes
-    .map(
-      (code) =>
-        `${code === "H" ? "(?:T" : ""}(?:(\\d+(?:\\.\\d+)?)${code})?${
-          code === "S" ? ")?" : ""
-        }`
-    )
-    .join("")}`
-);
+const re =
+  /P(?:(\d+(?:[\.,]\d+)?)Y)?(?:(\d+(?:[\.,]\d+)?)M)?(?:(\d+(?:[\.,]\d+)?)W)?(?:(\d+(?:[\.,]\d+)?)D)?(?:T(?:(\d+(?:[\.,]\d+)?)H)?(?:(\d+(?:[\.,]\d+)?)M)?(?:(\d+)(?:[\.,](?:(\d{0,3})(?:(\d{0,3})(?:(\d{0,3})))?))?S)?)?/;
