@@ -1,7 +1,9 @@
-const codes = "YMWDHMS".split("");
-
 export class Duration {
+  //#region properties
+
   private parts: number[];
+
+  //#endregion
 
   constructor(
     years?: number | undefined,
@@ -19,6 +21,8 @@ export class Duration {
   constructor(...parts: number[]) {
     this.parts = parts;
   }
+
+  //#region prototype
 
   toString() {
     let string = "P";
@@ -48,4 +52,34 @@ export class Duration {
 
     return string;
   }
+
+  //#endregion
+
+  //#region static
+
+  static from(string: string): Duration {
+    const parts = string.match(re)?.slice(1) || [];
+    const secWithNs = parts.pop();
+    if (secWithNs) {
+      const [sec, ns] = secWithNs.split(".");
+      parts.push(sec!, ...(ns?.padEnd(3, "0").match(/\d{3}/g) || []));
+    }
+
+    return new Duration(...parts.map(Number));
+  }
+
+  //#endregion
 }
+
+const codes = "YMWDHMS".split("");
+
+const re = new RegExp(
+  `P${codes
+    .map(
+      (code) =>
+        `${code === "H" ? "(?:T" : ""}(?:(\\d+(?:\\.\\d+)?)${code})?${
+          code === "S" ? ")?" : ""
+        }`
+    )
+    .join("")}`
+);

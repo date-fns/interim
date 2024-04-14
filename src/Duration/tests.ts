@@ -11,7 +11,10 @@ describe("Duration", () => {
     });
 
     describe("from", () => {
-      it.todo("cretes a new instance from a string");
+      it("cretes a new instance from a string", () => {
+        const duration = Duration.from("P1Y2M3W4DT5H6M7.987654321S");
+        expect(duration.toString()).toBe("P1Y2M3W4DT5H6M7.987654321S");
+      });
 
       it.todo("cretes a new instance from a Duration-like object");
     });
@@ -117,6 +120,19 @@ describe("Duration", () => {
         it("omits time designator if time is missing", () => {
           const duration = new Duration(1, undefined, 3);
           expect(duration.toString()).toBe("P1Y3W");
+        });
+
+        it("formats seconds", () => {
+          const duration = new Duration(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            1
+          );
+          expect(duration.toString()).toBe("PT1S");
         });
 
         it("formats seconds with nanoseconds", () => {

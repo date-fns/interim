@@ -9,7 +9,7 @@ import picocolors from "picocolors";
 
 const { blue, green, gray, red } = picocolors;
 
-const srcPath = process.argv[2];
+const srcPath = relative(process.cwd(), process.argv[2]);
 const watch = !!process.argv.find((arg) => arg === "--watch");
 const debouncedMeasure = debounce(measure, 50);
 
