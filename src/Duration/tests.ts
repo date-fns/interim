@@ -8,6 +8,22 @@ describe("Duration", () => {
         const duration = new Duration(1, 2, 3, 4, 5, 6, 7, 987, 654, 321);
         expect(duration.toString()).toBe("P1Y2M3W4DT5H6M7.987654321S");
       });
+
+      it("allows to create negative ", () => {
+        const duration = new Duration(
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7,
+          -987,
+          -654,
+          -321
+        );
+        expect(duration.toString()).toBe("-P1Y2M3W4DT5H6M7.987654321S");
+      });
     });
 
     describe("from", () => {
@@ -41,10 +57,29 @@ describe("Duration", () => {
           const duration = Duration.from("PT0,000000001S");
           expect(duration.toString()).toBe("PT0.000000001S");
         });
+
+        it("allows sign", () => {
+          const duration = Duration.from("-P1Y2M3W4DT5H6M7.987654321S");
+          expect(duration.toString()).toBe("-P1Y2M3W4DT5H6M7.987654321S");
+        });
       });
 
       describe("Duration-like", () => {
-        it.todo("cretes a new instance");
+        it("cretes a new instance", () => {
+          const duration = Duration.from({
+            years: 1,
+            months: 2,
+            weeks: 3,
+            days: 4,
+            hours: 5,
+            minutes: 6,
+            seconds: 7,
+            milliseconds: 987,
+            microseconds: 654,
+            nanoseconds: 321,
+          });
+          expect(duration.toString()).toBe("P1Y2M3W4DT5H6M7.987654321S");
+        });
       });
     });
 
@@ -132,11 +167,25 @@ describe("Duration", () => {
       });
 
       describe("sign", () => {
-        it.todo("returns the sign of the duration");
+        it("returns -1 for a negative duration", () => {
+          expect(new Duration(-1).sign).toBe(-1);
+        });
+
+        it("returns 0 for a zero-length duration", () => {
+          expect(new Duration().sign).toBe(0);
+        });
+
+        it("returns 1 for a positive duration", () => {
+          expect(new Duration(1).sign).toBe(1);
+        });
       });
 
       describe("blank", () => {
-        it.todo("returns true if the duration is zero-length");
+        it("returns true if the duration is zero-length", () => {
+          expect(new Duration().blank).toBe(true);
+          expect(new Duration(0, 0, 0, 0, 0, 0, 0, 0, 0, 0).blank).toBe(true);
+          expect(new Duration(1).blank).toBe(false);
+        });
       });
     });
 
@@ -158,7 +207,16 @@ describe("Duration", () => {
       });
 
       describe("abs", () => {
-        it.todo("returns a duration with the sign removed");
+        it("always return a positive duration", () => {
+          expect(new Duration(-1).abs().sign).toBe(1);
+          expect(new Duration().abs().sign).toBe(0);
+          expect(new Duration(1).abs().sign).toBe(1);
+        });
+
+        it("returns a new instance", () => {
+          const duration = new Duration(-1);
+          expect(duration.abs()).not.toBe(duration);
+        });
       });
 
       describe("round", () => {
@@ -226,7 +284,9 @@ describe("Duration", () => {
       });
 
       describe("valueOf", () => {
-        it.todo("overrides Object.prototype.valueOf and throws an exception");
+        it("throws TypeError", () => {
+          expect(() => new Duration().valueOf()).toThrow(TypeError);
+        });
       });
     });
   });

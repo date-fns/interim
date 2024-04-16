@@ -1,12 +1,29 @@
 export class Duration {
   constructor(...parts) {
-    this.parts = parts;
+    let sum = 0;
+    this.parts = parts.map((part) => {
+      sum += part;
+      return Math.abs(part);
+    });
+    this.sign_ = Math.sign(sum);
   }
 
   //#region prototype
 
+  get sign() {
+    return this.sign_;
+  }
+
+  get blank() {
+    return this.sign_ === 0;
+  }
+
+  abs() {
+    return new Duration(...this.parts);
+  }
+
   toString() {
-    let string = "P";
+    let string = `${this.sign_ === -1 ? "-" : ""}P`;
     let timeString = "";
     let secString = "";
     let nsString = "";
@@ -34,13 +51,22 @@ export class Duration {
     return string;
   }
 
+  valueOf() {
+    throw new TypeError();
+  }
+
   //#endregion
 
   //#region static
 
-  static from(string) {
-    const parts = string.match(re)?.slice(1) || [];
-    return new Duration(...parts.map(Number));
+  static from(source) {
+    let parts;
+    if (typeof source === "string") {
+      const [sign, ...strs] = source.match(re)?.slice(1) || [];
+      const mul = sign === "-" ? -1 : 1;
+      parts = strs.map((str) => +str * mul);
+    }
+    return new Duration(...(parts || props.map((prop) => source[prop])));
   }
 
   //#endregion
@@ -54,7 +80,7 @@ const props =
 const codes = "YMWDHMS".split("");
 
 const re =
-  /P(?:(\d+(?:[\.,]\d+)?)Y)?(?:(\d+(?:[\.,]\d+)?)M)?(?:(\d+(?:[\.,]\d+)?)W)?(?:(\d+(?:[\.,]\d+)?)D)?(?:T(?:(\d+(?:[\.,]\d+)?)H)?(?:(\d+(?:[\.,]\d+)?)M)?(?:(\d+)(?:[\.,](?:(\d{0,3})(?:(\d{0,3})(?:(\d{0,3})))?))?S)?)?/;
+  /(-?)P(?:(\d+(?:[\.,]\d+)?)Y)?(?:(\d+(?:[\.,]\d+)?)M)?(?:(\d+(?:[\.,]\d+)?)W)?(?:(\d+(?:[\.,]\d+)?)D)?(?:T(?:(\d+(?:[\.,]\d+)?)H)?(?:(\d+(?:[\.,]\d+)?)M)?(?:(\d+)(?:[\.,](?:(\d{0,3})(?:(\d{0,3})(?:(\d{0,3})))?))?S)?)?/;
 
 props.map((prop, index) =>
   Object.defineProperty(Duration.prototype, prop, {

@@ -1,3 +1,18 @@
+export interface DurationLike {
+  years?: number;
+  months?: number;
+  weeks?: number;
+  days?: number;
+  hours?: number;
+  minutes?: number;
+  seconds?: number;
+  milliseconds?: number;
+  microseconds?: number;
+  nanoseconds?: number;
+}
+
+export type DurationSign = -1 | 0 | 1;
+
 export class Duration {
   constructor(
     years?: number | undefined,
@@ -11,6 +26,8 @@ export class Duration {
     microseconds?: number | undefined,
     nanoseconds?: number | undefined
   );
+
+  abs(): Duration;
 
   toString(): string;
 
@@ -34,5 +51,9 @@ export class Duration {
 
   get nanoseconds(): number;
 
-  static from(string: string): Duration;
+  get sign(): DurationSign;
+
+  get blank(): boolean;
+
+  static from(source: string | DurationLike): Duration;
 }
