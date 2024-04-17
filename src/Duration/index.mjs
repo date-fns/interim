@@ -18,6 +18,12 @@ export class Duration {
     return this.sign_ === 0;
   }
 
+  with(durationLike) {
+    return new Duration(
+      ...this.parts.map((part, index) => durationLike[props[index]] ?? part)
+    );
+  }
+
   abs() {
     return new Duration(...this.parts);
   }

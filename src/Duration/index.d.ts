@@ -27,10 +27,6 @@ export class Duration {
     nanoseconds?: number | undefined
   );
 
-  abs(): Duration;
-
-  toString(): string;
-
   get years(): number;
 
   get months(): number;
@@ -54,6 +50,12 @@ export class Duration {
   get sign(): DurationSign;
 
   get blank(): boolean;
+
+  with(durationLike: DurationLike): Duration;
+
+  abs(): Duration;
+
+  toString(): string;
 
   static from(source: string | DurationLike): Duration;
 }

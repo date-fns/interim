@@ -191,7 +191,20 @@ describe("Duration", () => {
 
     describe("methods", () => {
       describe("with", () => {
-        it.todo("overrides the specified parts of the duration");
+        it("overrides the specified parts of the duration", () => {
+          const duration = new Duration(1, 2, 3, 4, 5, 6, 7, 987, 654, 321);
+          expect(
+            duration
+              .with({
+                years: 3,
+                weeks: 4,
+                hours: 3,
+                seconds: 0,
+                microseconds: 343,
+              })
+              .toString()
+          ).toBe("P3Y2M4W4DT3H6M0.987343321S");
+        });
       });
 
       describe("add", () => {
